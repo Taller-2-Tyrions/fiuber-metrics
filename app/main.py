@@ -1,9 +1,11 @@
 from fastapi import FastAPI
-# from .routers import users
+from .routers import metrics
 from fastapi.middleware.cors import CORSMiddleware
-
+from .services import rabbit_services
 
 app = FastAPI()
+
+rabbit_services.run_rabbit_service()
 
 origins = [
     "http://localhost.tiangolo.com",
@@ -20,7 +22,7 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-# app.include_router(usersprofile.router)
+app.include_router(metrics.router)
 
 
 @app.get("/")
