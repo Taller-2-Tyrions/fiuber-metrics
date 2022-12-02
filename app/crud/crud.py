@@ -1,5 +1,5 @@
 from fastapi.encoders import jsonable_encoder
-from ..schemas.users_schema import UserEvent, UserBase
+from ..schemas.users_schema import UserEvent
 
 import json
 
@@ -16,28 +16,43 @@ def insert_user_metric(db, new_user_metric):
 	new_event = new_user_metric.get("event")
 	print("event: {event}".format(event=new_event))
 
+	empty_metric = { "signup_federate_evt": 0, "signup_pass_evt": 0, "login_federate_evt": 0, "login_pass_evt": 0, "block_evt": 0, "reset_evt": 0 }
+	user_metric = db["users"].find_one()
+	if not user_metric:
+		print("User not exist! Insert empty_metric")
+		db["users"].insert_one(empty_metric)
+		user_metric = db["users"].find_one()
 	match new_event:
 		case "Signup":
-			print("UserEvent SIGNUP")
-			user_metric = db["users"].find_one()
-			if not user_metric:
-				print("User not exist!")
-				db["users"].insert_one({"signup_federate":0,"signup_user_pass":0})
+			print("UserEvent Signup, insert new value")
+			
+			if new_user_metric["is_federate"] == "true":
+				new_count = user_metric["signup_federate_evt"] + 1
+				db["users"].update_one({"_id":user_metric["_id"]},{"$set":{"signup_federate_evt": new_count}})
 			else:
-				print("User exist!")
-				if new_user_metric["federate_id"] == "":
-					new_count = user_metric["signup_federate"] + 1
-					db["users"].update_one({"_id":user_metric["_id"]},{"$set":{"signup_federate": new_count}})
-				elif new_user_metric["email"] != "" and new_user_metric["password"] != "":
-					new_count = user_metric["signup_user_pass"] + 1
-					db["users"].update_one({"_id":user_metric["_id"]},{"$set":{"signup_user_pass": new_count}})
+				new_count = user_metric["signup_pass_evt"] + 1
+				db["users"].update_one({"_id":user_metric["_id"]},{"$set":{"signup_pass_evt": new_count}})
 
-				#db["users"].find_one_and_update({"$set": user_metric})
-		case UserEvent.LOGIN:
-			print("UserEvent LOGIN")
-		case UserEvent.BLOCK:
-			print("UserEvent BLOCK")
-		case UserEvent.RESET:
-			print("UserEvent RESET")
+		case "Login":
+			print("UserEvent Login, insert new value")
+			if new_user_metric["is_federate"] == "true":
+				new_count = user_metric["login_federate_evt"] + 1
+				db["users"].update_one({"_id":user_metric["_id"]},{"$set":{"login_federate_evt": new_count}})
+			else:
+				new_count = user_metric["login_pass_evt"] + 1
+				db["users"].update_one({"_id":user_metric["_id"]},{"$set":{"login_pass_evt": new_count}})
+			
+		case "Block":
+			print("UserEvent Block, insert new value")
+
+			new_count = user_metric["block_evt"] + 1
+			db["users"].update_one({"_id":user_metric["_id"]},{"$set":{"block_evt": new_count}})
+
+		case "Reset":
+			print("UserEvent Reset, insert new value")
+
+			new_count = user_metric["reset_evt"] + 1
+			db["users"].update_one({"_id":user_metric["_id"]},{"$set":{"reset_evt": new_count}})
 
 	print("End insert_user_metric")
+
