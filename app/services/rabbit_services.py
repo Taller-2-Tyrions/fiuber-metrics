@@ -25,7 +25,8 @@ def run_rabbit_service():
   crud.insert_voyages_metric_empty()
 
   # Access the CLODUAMQP_URL environment variable and parse it (fallback to localhost)
-  url = os.environ.get('CLOUDAMQP_URL', 'amqps://wjcumqjk:5YBAhdzlge0w0Itf5t94VPWy_h0xs8cX@chimpanzee.rmq.cloudamqp.com/wjcumqjk')
+  # change!
+  url = "foo"
   params = pika.URLParameters(url)
   connection = pika.BlockingConnection(params)
   channel = connection.channel() # start a channel

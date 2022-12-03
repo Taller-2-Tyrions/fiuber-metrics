@@ -6,10 +6,10 @@ from threading import Thread
 
 app = FastAPI()
 
+
 new_thread = Thread(target=rabbit_services.run_rabbit_service)
 
 new_thread.start()
-# rabbit_services.run_rabbit_service()
 
 origins = [
     "http://localhost.tiangolo.com",

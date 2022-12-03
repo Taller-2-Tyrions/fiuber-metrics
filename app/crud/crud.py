@@ -35,12 +35,6 @@ def insert_metric(db, new_user_metric):
 	new_event = new_user_metric.get("event")
 	print("event: {event}".format(event=new_event))
 
-	# empty_metric = { "signup_federate_evt": 0, "signup_pass_evt": 0, "login_federate_evt": 0, "login_pass_evt": 0, "block_evt": 0, "reset_evt": 0 }
-	# user_metric = db["users"].find_one()
-	# if not user_metric:
-	# 	print("User not exist! Insert empty_metric")
-	# 	db["users"].insert_one(empty_metric)
-	# 	user_metric = db["users"].find_one()
 	match new_event:
 		case "Signup":
 			print("UserEvent Signup, insert new value")
@@ -82,15 +76,8 @@ def insert_metric(db, new_user_metric):
 
 			user_metric = db["voyages"].find_one()
 			voyages = user_metric["voyages"] + 1
-			print("old-average_duration: "+str(user_metric["average_duration"]))
-			print("old-voyages: "+str(user_metric["voyages"]))
-			print("new-voyage: "+str(voyages))
-			print("duration-new-voyage: "+str(float(new_user_metric["duration"]))+"|"+str(voyages))
 
 			average_duration = (user_metric["average_duration"]*(user_metric["voyages"]/voyages)) + (float(new_user_metric["duration"]) / voyages)
-
-			print("new-average_duration: "+str(average_duration))
-
 
 			vip_voyages = user_metric["vip_voyages"]
 			no_vip_voyages = user_metric["no_vip_voyages"]
@@ -98,8 +85,6 @@ def insert_metric(db, new_user_metric):
 				vip_voyages = vip_voyages + 1
 			else:
 				no_vip_voyages = user_metric["no_vip_voyages"] + 1
-
-			print("average_duration: "+str(average_duration))
 
 			db["voyages"].update_one(
 				{"_id":user_metric["_id"]},
@@ -125,14 +110,6 @@ def insert_metric(db, new_user_metric):
 				average_price = (user_metric["average_price"]*(user_metric["payments_success"]/payments_success)) + (float(new_user_metric["price"]) / payments_success)
 			else:
 				payments_fail = payments_fail + 1
-
-			print("average_price: "+str(user_metric["average_price"]))
-			print("test1: "+str(user_metric["payments_success"]))
-			print("test2: "+str(payments_success))
-			print("test3: "+str(float(new_user_metric["price"]))+"|"+str(payments_success))
-
-			
-			print("average_price: "+str(average_price))
 
 			db["payments"].update_one(
 				{"_id":user_metric["_id"]},
