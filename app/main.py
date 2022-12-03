@@ -2,10 +2,14 @@ from fastapi import FastAPI
 from .routers import metrics
 from fastapi.middleware.cors import CORSMiddleware
 from .services import rabbit_services
+from threading import Thread
 
 app = FastAPI()
 
-rabbit_services.run_rabbit_service()
+
+new_thread = Thread(target=rabbit_services.run_rabbit_service)
+
+new_thread.start()
 
 origins = [
     "http://localhost.tiangolo.com",

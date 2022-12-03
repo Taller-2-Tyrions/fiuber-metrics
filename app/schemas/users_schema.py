@@ -6,7 +6,3 @@ class UserEvent(Enum):
     LOGIN = "Login"
     BLOCK = "Block"
     RESET = "Reset"
-
-# class UserBase(BaseModel):
-#     signup_federate: int
-#     signup_user_pass: int
