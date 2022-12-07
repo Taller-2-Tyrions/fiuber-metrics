@@ -1,5 +1,4 @@
 from fastapi.encoders import jsonable_encoder
-from ..database.mongo import db
 import json
 
 
