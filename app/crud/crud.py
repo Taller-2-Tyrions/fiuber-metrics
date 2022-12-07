@@ -3,7 +3,7 @@ from ..database.mongo import db
 import json
 
 
-def insert_users_metric_empty():
+def insert_users_metric_empty(db):
     empty_metric = {"signup_federate_evt": 0, "signup_pass_evt": 0,
                     "login_federate_evt": 0, "login_pass_evt": 0,
                     "block_evt": 0, "reset_evt": 0}
@@ -13,7 +13,7 @@ def insert_users_metric_empty():
         db["users"].insert_one(empty_metric)
 
 
-def insert_voyages_metric_empty():
+def insert_voyages_metric_empty(db):
     empty_metric = {"voyages": 0, "average_duration": 0.0,
                     "vip_voyages": 0, "no_vip_voyages": 0}
     user_metric = db["voyages"].find_one()
@@ -22,7 +22,7 @@ def insert_voyages_metric_empty():
         db["voyages"].insert_one(empty_metric)
 
 
-def insert_payments_metric_empty():
+def insert_payments_metric_empty(db):
     empty_metric = {"payments_success": 0, "payments_fail": 0,
                     "average_price": 0.0}
     user_metric = db["payments"].find_one()
@@ -75,6 +75,17 @@ def insert_metric(db, new_user_metric):
             print("UserEvent Block, insert new value")
 
             new_count = user_metric["block_evt"] + 1
+            db["users"].update_one({"_id": user_metric["_id"]},
+                                   {"$set":
+                                   {"block_evt": new_count}})
+        case "Unblock":
+            user_metric = db["users"].find_one()
+            print("UserEvent Unblock, insert new value")
+
+            block_evt = user_metric["block_evt"]
+            if block_evt == 0:
+                return
+            new_count = block_evt - 1
             db["users"].update_one({"_id": user_metric["_id"]},
                                    {"$set":
                                    {"block_evt": new_count}})

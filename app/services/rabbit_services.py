@@ -29,9 +29,9 @@ def run_rabbit_service():
     print("Starting rabbit services...")
 
     print("Check empty database ...")
-    crud.insert_users_metric_empty()
-    crud.insert_payments_metric_empty()
-    crud.insert_voyages_metric_empty()
+    crud.insert_users_metric_empty(db)
+    crud.insert_payments_metric_empty(db)
+    crud.insert_voyages_metric_empty(db)
     print("connect to queue ...")
     # Access the CLODUAMQP_URL environment variable and parse it
     # (fallback to localhost)
