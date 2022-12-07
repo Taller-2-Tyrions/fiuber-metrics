@@ -32,7 +32,7 @@ def run_rabbit_service():
     crud.insert_users_metric_empty()
     crud.insert_payments_metric_empty()
     crud.insert_voyages_metric_empty()
-
+    print("connect to queue ...")
     # Access the CLODUAMQP_URL environment variable and parse it
     # (fallback to localhost)
     # change!
@@ -45,6 +45,7 @@ def run_rabbit_service():
     channel.basic_consume(METRICS_QUEUE, callback, auto_ack=True)
 
     # start consuming (blocks)
+    print("start consuming ...")
     channel.start_consuming()
     connection.close()
 

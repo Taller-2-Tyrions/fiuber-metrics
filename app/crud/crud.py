@@ -1,5 +1,4 @@
 from fastapi.encoders import jsonable_encoder
-from ..schemas.users_schema import UserEvent
 from ..database.mongo import db
 import json
 
@@ -34,9 +33,8 @@ def insert_payments_metric_empty():
 
 def insert_metric(db, new_user_metric):
     new_user_metric_je = jsonable_encoder(new_user_metric)
-	
     my_json = new_user_metric.decode('utf8').replace("'", '"')
-    print("insert_metric: "+ str(new_user_metric_je))
+    print("insert_metric: " + str(new_user_metric_je))
     new_user_metric = json.loads(my_json)
 
     new_event = new_user_metric.get("event")
@@ -97,7 +95,9 @@ def insert_metric(db, new_user_metric):
             user_metric = db["voyages"].find_one()
             voyages = user_metric["voyages"] + 1
 
-            average_duration = (user_metric["average_duration"]*(user_metric["voyages"]/voyages)) + (float(new_user_metric["duration"]) / voyages)
+            f1 = user_metric["voyages"]/voyages
+            f2 = (float(new_user_metric["duration"]) / voyages)
+            average_duration = (user_metric["average_duration"] * f1) + f2
 
             vip_voyages = user_metric["vip_voyages"]
             no_vip_voyages = user_metric["no_vip_voyages"]
@@ -124,7 +124,9 @@ def insert_metric(db, new_user_metric):
 
             if new_user_metric["status"] == "true":
                 payments_success = payments_success + 1
-                average_price = (user_metric["average_price"]*(user_metric["payments_success"]/payments_success)) + (float(new_user_metric["price"]) / payments_success)
+                f1 = user_metric["payments_success"]/payments_success
+                f2 = (float(new_user_metric["price"]) / payments_success)
+                average_price = (user_metric["average_price"] * f1) + f2
             else:
                 payments_fail = payments_fail + 1
 
