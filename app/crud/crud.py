@@ -137,5 +137,6 @@ def insert_metric(db, new_user_metric):
                     "payments_fail": payments_fail,
                     "average_price": average_price
                     }})
-
+        case _:
+            print("UserEvent is not register")
     print("End insert_metric")
