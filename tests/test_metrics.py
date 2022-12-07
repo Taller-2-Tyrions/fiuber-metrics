@@ -1,5 +1,5 @@
-import mongomock
 from app.crud import crud
+import mongomock
 
 
 def test_insert_users_metric_empty():
