@@ -45,8 +45,8 @@ def test_insert_new_metric_signup_federate():
 
     metric = db["users"].find_one()
 
-    assert(metric["signup_federate_evt"] == 0)
-    assert(metric["signup_pass_evt"] == 0)
+    assert (metric["signup_federate_evt"] == 0)
+    assert (metric["signup_pass_evt"] == 0)
 
     new_user_metric = bytes('{"event":"Signup","is_federate":"true"}', 'utf-8')
     crud.insert_metric(db, new_user_metric)
