@@ -12,20 +12,20 @@ env:
   APP_NAME: ${{ secrets.HEROKU_APP }}
 
 jobs:
-  flake8:
-    name: Linter
-    runs-on: ubuntu-20.04
-    steps:
-    - name: Checkout repository
-      uses: actions/checkout@v2
-    - name: Set up Python 3.9
-      uses: actions/setup-python@v1
-      with:
-        python-version: 3.9
-    - name: Check Lint
-      run: |
-        pip install flake8
-        flake8 .
+  # flake8:
+  #   name: Linter
+  #   runs-on: ubuntu-20.04
+  #   steps:
+  #   - name: Checkout repository
+  #     uses: actions/checkout@v2
+  #   - name: Set up Python 3.9
+  #     uses: actions/setup-python@v1
+  #     with:
+  #       python-version: 3.9
+  #   - name: Check Lint
+  #     run: |
+  #       pip install flake8
+  #       flake8 .
 
   # test:
   #   runs-on: ubuntu-20.04
@@ -50,7 +50,7 @@ jobs:
     runs-on: ubuntu-20.04
     if: ${{ github.event_name == 'push' }}
     name: Deployment
-    needs: [ flake8, test ]
+    #needs: [ flake8, test ]
     defaults:
       run:
         working-directory: .
