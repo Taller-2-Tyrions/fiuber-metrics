@@ -92,4 +92,7 @@ jobs:
         # For more information look at https://devcenter.heroku.com/articles/process-model
         
         process_type: web
-
+      env:
+        MONGO_URI: ${{ secrets.MONGO_URI }}
+        MONGO_PORT: ${{ secrets.MONGO_PORT }} 
+        MONGO_DB: ${{ secrets.MONGO_DB }}

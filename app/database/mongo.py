@@ -3,7 +3,8 @@ from dotenv import load_dotenv
 import os
 
 load_dotenv()
-
+port = os.getenv("MONGO_PORT")
 uri = os.getenv("MONGO_URI")
-client = MongoClient(uri, 8000)
+
+client = MongoClient(uri, port)
 db = client["metrics"]
