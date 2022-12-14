@@ -1,0 +1,8 @@
+fastapi
+uvicorn
+pytest
+pytest-cov
+pymongo
+python-dotenv
+pika
+mongomock
