@@ -1,3 +1,5 @@
+[![codecov](https://codecov.io/gh/Taller-2-Tyrions/fiuber-metrics/branch/main/graph/badge.svg?token=pqpC5Y9JiG)](https://codecov.io/gh/Taller-2-Tyrions/fiuber-metrics)
+
 # Fiuber-Metrics
 Microservicio para obtener metricas de la plataforma.
 
