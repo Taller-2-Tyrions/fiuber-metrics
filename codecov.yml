@@ -1,0 +1,5 @@
+ignore:
+  - "app/database"
+  - "app/routers"
+  - "app/main.py"
+  - "app/services"
