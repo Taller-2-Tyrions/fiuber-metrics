@@ -3,7 +3,10 @@
 # Fiuber-Metrics
 Microservicio para obtener metricas de la plataforma.
 
-Los mensajes sobre uso de la plataforma son encolados en una cola de Rabbit. Luego son mismos consumidos por el microservicio quien los procesa e inserta en una base de datos Mongo. Se accede a los datos mediante consultas a la API.
+Los mensajes sobre uso de la plataforma son encolados en una cola de Rabbit. Los mismos son consumidos por el microservicio quien los procesa e inserta en una base de datos Mongo. Se accede a los datos mediante consultas a la API.
+
+# Documentación
+Documentación técnica: https://taller-2-tyrions.github.io/fiuber-documentation-tecnica/
 
 ## Uso del API
 
