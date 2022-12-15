@@ -198,7 +198,8 @@ def test_insert_new_metric_voyages():
     assert (metric["vip_voyages"] == 2)
     assert (metric["no_vip_voyages"] == 0)
 
-    body = '{"event":"Voyage", "duration": 10, "is_vip": "false"}'
+    body = '{"event":"Voyage", "start_time": "' + start.isoformat()
+    body += '", "end_time": "' + end.isoformat() + '", "is_vip": "false"}'
     new_metric = bytes(body, 'utf-8')
     crud.insert_metric(db, new_metric)
 
