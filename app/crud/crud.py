@@ -45,7 +45,7 @@ def insert_metric(db, new_user_metric):
             print("UserEvent Signup, insert new value")
 
             user_metric = db["users"].find_one()
-            if new_user_metric["is_federate"] == "true":
+            if new_user_metric["is_federate"].lower() == "true":
                 new_count = user_metric["signup_federate_evt"] + 1
                 db["users"].update_one({"_id": user_metric["_id"]},
                                        {"$set": {
@@ -59,7 +59,7 @@ def insert_metric(db, new_user_metric):
         case "Login":
             user_metric = db["users"].find_one()
             print("UserEvent Login, insert new value")
-            if new_user_metric["is_federate"] == "true":
+            if new_user_metric["is_federate"].lower() == "true":
                 new_count = user_metric["login_federate_evt"] + 1
                 db["users"].update_one({"_id": user_metric["_id"]},
                                        {"$set":
@@ -115,7 +115,7 @@ def insert_metric(db, new_user_metric):
 
             vip_voyages = user_metric["vip_voyages"]
             no_vip_voyages = user_metric["no_vip_voyages"]
-            if new_user_metric["is_vip"] == "true":
+            if new_user_metric["is_vip"].lower() == "true":
                 vip_voyages = vip_voyages + 1
             else:
                 no_vip_voyages = user_metric["no_vip_voyages"] + 1
@@ -136,7 +136,7 @@ def insert_metric(db, new_user_metric):
 
             average_price = user_metric["average_price"]
 
-            if new_user_metric["status"] == "true":
+            if new_user_metric["status"].lower() == "true":
                 payments_success = payments_success + 1
                 f1 = user_metric["payments_success"]/payments_success
                 f2 = (float(new_user_metric["price"]) / payments_success)
