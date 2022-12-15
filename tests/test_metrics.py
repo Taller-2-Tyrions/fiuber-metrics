@@ -173,8 +173,8 @@ def test_insert_new_metric_voyages():
     start = datetime.datetime.now()
     end = start + datetime.timedelta(seconds=10)
 
-    body = '{"event":"Voyage", "start_time":' + start.isoformat()
-    body += ', "end_time": ' + end.isoformat() + ', "is_vip": "true"}'
+    body = '{"event":"Voyage", "start_time": "' + start.isoformat()
+    body += '", "end_time": "' + end.isoformat() + '", "is_vip": "true"}'
     new_metric = bytes(body, 'utf-8')
     crud.insert_metric(db, new_metric)
 
@@ -186,8 +186,8 @@ def test_insert_new_metric_voyages():
     assert (metric["no_vip_voyages"] == 0)
     end = start + datetime.timedelta(seconds=90)
 
-    body = '{"event":"Voyage", "start_time":' + start.isoformat()
-    body += ', "end_time": ' + end.isoformat() + ', "is_vip": "true"}'
+    body = '{"event":"Voyage", "start_time": "' + start.isoformat()
+    body += '", "end_time": "' + end.isoformat() + '", "is_vip": "true"}'
     new_metric = bytes(body, 'utf-8')
     crud.insert_metric(db, new_metric)
 
