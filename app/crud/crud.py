@@ -1,5 +1,6 @@
 from fastapi.encoders import jsonable_encoder
 import json
+from datetime import datetime
 
 
 def insert_users_metric_empty(db):
@@ -106,7 +107,10 @@ def insert_metric(db, new_user_metric):
             voyages = user_metric["voyages"] + 1
 
             f1 = user_metric["voyages"]/voyages
-            f2 = (float(new_user_metric["duration"]) / voyages)
+            start = datetime.fromisoformat(new_user_metric["start_time"])
+            end = datetime.fromisoformat(new_user_metric["end_time"])
+            duration = (start-end).total_seconds()
+            f2 = duration / voyages
             average_duration = (user_metric["average_duration"] * f1) + f2
 
             vip_voyages = user_metric["vip_voyages"]
