@@ -197,7 +197,7 @@ def test_insert_new_metric_voyages():
     assert (metric["average_duration"] == 50)
     assert (metric["vip_voyages"] == 2)
     assert (metric["no_vip_voyages"] == 0)
-    
+
     end = start + datetime.timedelta(seconds=10)
     body = '{"event":"Voyage", "start_time": "' + start.isoformat()
     body += '", "end_time": "' + end.isoformat() + '", "is_vip": "false"}'
