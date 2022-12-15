@@ -109,7 +109,7 @@ def insert_metric(db, new_user_metric):
             f1 = user_metric["voyages"]/voyages
             start = datetime.fromisoformat(new_user_metric["start_time"])
             end = datetime.fromisoformat(new_user_metric["end_time"])
-            duration = (start-end).total_seconds()
+            duration = (end-start).total_seconds()
             f2 = duration / voyages
             average_duration = (user_metric["average_duration"] * f1) + f2
 
